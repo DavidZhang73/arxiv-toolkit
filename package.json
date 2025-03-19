@@ -1,6 +1,6 @@
 {
-  "name": "ar-xiv-toolkit",
-  "displayName": "Ar xiv toolkit",
+  "name": "arxiv-toolkit",
+  "displayName": "ArXiv Toolkit",
   "version": "0.0.1",
   "description": "Enhance your ArXiv browsing expirence.",
   "author": "Jiahao Zhang. <davidbill@outlook.com>",
@@ -10,6 +10,7 @@
     "package": "plasmo package"
   },
   "dependencies": {
+    "@plasmohq/storage": "^1.15.0",
     "plasmo": "0.90.3",
     "react": "18.2.0",
     "react-dom": "18.2.0"
@@ -26,6 +27,19 @@
   "manifest": {
     "host_permissions": [
       "https://*/*"
+    ],
+    "permissions": [
+      "storage"
+    ]
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@parcel/watcher",
+      "@swc/core",
+      "esbuild",
+      "lmdb",
+      "msgpackr-extract",
+      "sharp"
     ]
   }
 }
