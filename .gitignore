@@ -31,3 +31,6 @@ dist/
 
 # typescript
 .tsbuildinfo
+
+# SUBMIT_KEYS
+SUBMIT_KEYS.json
