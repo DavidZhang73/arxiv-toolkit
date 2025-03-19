@@ -49,8 +49,8 @@ function IndexOptions() {
                         Title Whitelist:
                         <textarea
                             placeholder="Enter title whitelist keywords..."
-                            value={titleWhitelist}
-                            onChange={(e) => setTitleWhitelist(e.target.value)}
+                            defaultValue={titleWhitelist}
+                            onBlur={(e) => setTitleWhitelist(e.target.value)}
                             style={{ width: "100%", height: 100, marginTop: 8 }}
                         />
                     </label>
@@ -60,8 +60,8 @@ function IndexOptions() {
                         Author Whitelist:
                         <textarea
                             placeholder="Enter author whitelist keywords..."
-                            value={authorWhitelist}
-                            onChange={(e) => setAuthorWhitelist(e.target.value)}
+                            defaultValue={authorWhitelist}
+                            onBlur={(e) => setAuthorWhitelist(e.target.value)}
                             style={{ width: "100%", height: 100, marginTop: 8 }}
                         />
                     </label>
@@ -71,8 +71,8 @@ function IndexOptions() {
                         Comment Whitelist:
                         <textarea
                             placeholder="Enter comment whitelist keywords..."
-                            value={commentWhitelist}
-                            onChange={(e) => setCommentWhitelist(e.target.value)}
+                            defaultValue={commentWhitelist}
+                            onBlur={(e) => setCommentWhitelist(e.target.value)}
                             style={{ width: "100%", height: 100, marginTop: 8 }}
                         />
                     </label>
@@ -82,8 +82,8 @@ function IndexOptions() {
                         Blacklist:
                         <textarea
                             placeholder="Enter blacklist keywords..."
-                            value={blacklist}
-                            onChange={(e) => setBlacklist(e.target.value)}
+                            defaultValue={blacklist}
+                            onBlur={(e) => setBlacklist(e.target.value)}
                             style={{ width: "100%", height: 100, marginTop: 8 }}
                         />
                     </label>
