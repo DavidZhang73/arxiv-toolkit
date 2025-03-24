@@ -16,6 +16,12 @@ Tired of skimming through 100+ AI papers every day? This extension helps you sta
 - Highlighting or dimming papers based on custom keywords or regex rules.
 - Reordering and grouping daily papers by matching topics or interests.
 
+### Screenshots
+
+![Screenshot](assets/screenshot1.png)
+
+![Screenshot](assets/screenshot2.png)
+
 ### Tech Stack
 
 This project is built using the following open-source frameworks:
