@@ -1,6 +1,7 @@
 import type { PlasmoCSConfig } from "plasmo"
 
 import { Storage } from "@plasmohq/storage"
+
 import { deserializeRegexList } from "~utils"
 
 export const config: PlasmoCSConfig = {
@@ -10,14 +11,17 @@ export const config: PlasmoCSConfig = {
 const storage = new Storage()
 
 function hexToRgb(hex) {
-  hex = hex.replace(/^#/, '')
+  hex = hex.replace(/^#/, "")
 
   if (hex.length === 3) {
-    hex = hex.split('').map(c => c + c).join('')
+    hex = hex
+      .split("")
+      .map((c) => c + c)
+      .join("")
   }
 
   if (hex.length !== 6) {
-    throw new Error('Invalid hex color: ' + hex)
+    throw new Error("Invalid hex color: " + hex)
   }
 
   const bigint = parseInt(hex, 16)
@@ -31,15 +35,25 @@ function hexToRgb(hex) {
 window.addEventListener("load", async () => {
   const highlightEnabled =
     (await storage.get<boolean>("highlight-enabled")) ?? true
-  const highlightColor = (await storage.get<string>("highlight-color")) ?? "#4deb29"
+  const highlightColor =
+    (await storage.get<string>("highlight-color")) ?? "#4deb29"
   const hideBlacklistEnabled =
     (await storage.get<boolean>("hide-blacklist-enabled")) ?? true
-  const groupingEnabled = (await storage.get<boolean>("grouping-enabled")) ?? false
+  const groupingEnabled =
+    (await storage.get<boolean>("grouping-enabled")) ?? false
 
-  const titleWhitelist = deserializeRegexList((await storage.get<string[]>("title-whitelist")) ?? ["/(video)/ig"])
-  const authorWhitelist = deserializeRegexList((await storage.get<string[]>("author-whitelist")) ?? ["/(Kaiming He)/ig"])
-  const commentWhitelist = deserializeRegexList((await storage.get<string[]>("comment-whitelist")) ?? ["/(accept)/ig"])
-  const blacklist = deserializeRegexList((await storage.get<string[]>("blacklist")) ?? ["/(mamba)/ig"])
+  const titleWhitelist = deserializeRegexList(
+    (await storage.get<string[]>("title-whitelist")) ?? ["/(video)/ig"]
+  )
+  const authorWhitelist = deserializeRegexList(
+    (await storage.get<string[]>("author-whitelist")) ?? ["/(Kaiming He)/ig"]
+  )
+  const commentWhitelist = deserializeRegexList(
+    (await storage.get<string[]>("comment-whitelist")) ?? ["/(accept)/ig"]
+  )
+  const blacklist = deserializeRegexList(
+    (await storage.get<string[]>("blacklist")) ?? ["/(mamba)/ig"]
+  )
 
   console.log("Highlight Enabled:", highlightEnabled)
   console.log("Hide Blacklist Enabled:", hideBlacklistEnabled)
@@ -96,9 +110,9 @@ window.addEventListener("load", async () => {
       const authorElement = dd.querySelector(".list-authors")
       const commentElement = dd.querySelector(".list-comments")
 
-      let isBlacklisted = false;
+      let isBlacklisted = false
 
-      [titleElement, authorElement, commentElement].forEach((element) => {
+      ;[titleElement, authorElement, commentElement].forEach((element) => {
         if (element) {
           blacklist.forEach((regex) => {
             if (regex.test(element.textContent || "")) {
