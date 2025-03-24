@@ -37,3 +37,4 @@ The easiest way to deploy your Plasmo extension is to use the built-in [bpp](htt
 
 - [x] 配置页面
 - [x] ArXiv Recent 页面关键词高亮与过滤
+- [ ] 关键词支持正则

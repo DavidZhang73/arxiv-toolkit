@@ -1,95 +1,107 @@
+import {
+    Paper,
+    Text,
+    MantineProvider,
+    Switch,
+    Center,
+    Divider,
+    ColorInput,
+    Anchor,
+} from "@mantine/core"
+import { IconCheck, IconX, IconBrandGithubFilled } from '@tabler/icons-react'
 import { useStorage } from "@plasmohq/storage/hook"
+import { useRegexStorage } from "~utils"
+import '@mantine/core/styles.css'
+
+import RegexList from "regex-list"
 
 function IndexOptions() {
     const [highlightEnabled, setHighlightEnabled] = useStorage<boolean>("highlight-enabled", true)
+    const [highlightColor, setHighlightColor] = useStorage<string>("highlight-color", "#4deb29")
     const [hideBlacklistEnabled, setHideBlacklistEnabled] = useStorage<boolean>("hide-blacklist-enabled", true)
-    const [titleWhitelist, setTitleWhitelist] = useStorage<string>("title-whitelist", "")
-    const [authorWhitelist, setAuthorWhitelist] = useStorage<string>("author-whitelist", "")
-    const [commentWhitelist, setCommentWhitelist] = useStorage<string>("comment-whitelist", "")
-    const [blacklist, setBlacklist] = useStorage<string>("blacklist", "")
+    const [groupingEnabled, setGroupingEnabled] = useStorage<boolean>("grouping-enabled", false)
+
+    const [titleWhitelist, setTitleWhitelist] = useRegexStorage("title-whitelist", [/(video)/ig])
+    const [authorWhitelist, setAuthorWhitelist] = useRegexStorage("author-whitelist", [/(Kaiming He)/ig])
+    const [commentWhitelist, setCommentWhitelist] = useRegexStorage("comment-whitelist", [/(accept)/ig])
+
+    const [blacklist, setBlacklist] = useRegexStorage("blacklist", [/(mamba)/ig])
 
     return (
-        <div
-            style={{
-                display: "flex",
-                justifyContent: "center", // 水平居中
-                paddingTop: 32 // 添加顶部间距
-            }}>
-            <div
-                style={{
-                    width: 800, // 固定宽度
-                    padding: 16,
-                    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)", // 添加阴影
-                    borderRadius: 8, // 圆角
-                    backgroundColor: "#fff" // 背景色
-                }}>
-                <h2>ArXiv Toolkit</h2>
-                <div style={{ marginBottom: 16 }}>
-                    <label>
-                        <input
-                            type="checkbox"
-                            checked={highlightEnabled}
-                            onChange={(e) => setHighlightEnabled(e.target.checked)}
-                        />
-                        Enable Keyword Highlight
-                    </label>
-                </div>
-                <div style={{ marginBottom: 16 }}>
-                    <label>
-                        <input
-                            type="checkbox"
-                            checked={hideBlacklistEnabled}
-                            onChange={(e) => setHideBlacklistEnabled(e.target.checked)}
-                        />
-                        Hide Blacklist Entries
-                    </label>
-                </div>
-                <div style={{ marginBottom: 16 }}>
-                    <label>
-                        Title Whitelist:
-                        <textarea
-                            placeholder="Enter title whitelist keywords..."
-                            defaultValue={titleWhitelist}
-                            onBlur={(e) => setTitleWhitelist(e.target.value)}
-                            style={{ width: "100%", height: 100, marginTop: 8 }}
-                        />
-                    </label>
-                </div>
-                <div style={{ marginBottom: 16 }}>
-                    <label>
-                        Author Whitelist:
-                        <textarea
-                            placeholder="Enter author whitelist keywords..."
-                            defaultValue={authorWhitelist}
-                            onBlur={(e) => setAuthorWhitelist(e.target.value)}
-                            style={{ width: "100%", height: 100, marginTop: 8 }}
-                        />
-                    </label>
-                </div>
-                <div style={{ marginBottom: 16 }}>
-                    <label>
-                        Comment Whitelist:
-                        <textarea
-                            placeholder="Enter comment whitelist keywords..."
-                            defaultValue={commentWhitelist}
-                            onBlur={(e) => setCommentWhitelist(e.target.value)}
-                            style={{ width: "100%", height: 100, marginTop: 8 }}
-                        />
-                    </label>
-                </div>
-                <div style={{ marginBottom: 16 }}>
-                    <label>
-                        Blacklist:
-                        <textarea
-                            placeholder="Enter blacklist keywords..."
-                            defaultValue={blacklist}
-                            onBlur={(e) => setBlacklist(e.target.value)}
-                            style={{ width: "100%", height: 100, marginTop: 8 }}
-                        />
-                    </label>
-                </div>
-            </div>
-        </div>
+        <MantineProvider>
+            <Center>
+                <Paper shadow="md" withBorder p="xl" mt="xl" w={600}>
+                    <Text size="xl" fw={700} style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                        ArXiv Toolkit
+                        <Anchor href="https://github.com/DavidZhang73/arxiv-toolkit" target="_blank" style={{ display: "flex", alignItems: "center" }}>
+                            <IconBrandGithubFilled size={24} color="black" />
+                        </Anchor>
+                    </Text>
+                    <Divider my="md" />
+                    <Switch
+                        label="Whitelist Highlighting"
+                        description="Highlight entries matching whitelist rules"
+                        checked={highlightEnabled}
+                        onChange={(event) => setHighlightEnabled(event.currentTarget.checked)}
+                        thumbIcon={
+                            highlightEnabled ? (
+                                <IconCheck size={12} color="var(--mantine-color-teal-6)" stroke={3} />
+                            ) : (
+                                <IconX size={12} color="var(--mantine-color-red-6)" stroke={3} />
+                            )
+                        }
+                        mt="md"
+                    />
+                    <Switch
+                        label="Blacklist Dimming"
+                        description="De-emphasize entries matching whitelist rules"
+                        checked={hideBlacklistEnabled}
+                        onChange={(event) => setHideBlacklistEnabled(event.currentTarget.checked)}
+                        thumbIcon={
+                            hideBlacklistEnabled ? (
+                                <IconCheck size={12} color="var(--mantine-color-teal-6)" stroke={3} />
+                            ) : (
+                                <IconX size={12} color="var(--mantine-color-red-6)" stroke={3} />
+                            )
+                        }
+                        mt="md"
+                    />
+                    <Switch
+                        label="Grouping"
+                        description="Enable grouping of entries by whitelist and blacklist rules"
+                        checked={groupingEnabled}
+                        onChange={(event) => setGroupingEnabled(event.currentTarget.checked)}
+                        thumbIcon={
+                            groupingEnabled ? (
+                                <IconCheck size={12} color="var(--mantine-color-teal-6)" stroke={3} />
+                            ) : (
+                                <IconX size={12} color="var(--mantine-color-red-6)" stroke={3} />
+                            )
+                        }
+                        mt="md"
+                    />
+                    <ColorInput
+                        label="Highlight Color"
+                        description="Color used to highlight entries matching whitelist rules"
+                        placeholder="Hex color"
+                        value={highlightColor}
+                        onChangeEnd={(color) => setHighlightColor(color)}
+                        swatches={["#4deb29", "#ffff00"]}
+                        mt="md"
+                    />
+                    <Text size="lg" fw={600} mt="md">Title Whitelist</Text>
+                    <RegexList regexList={titleWhitelist} onChange={(list) => setTitleWhitelist(list)} />
+                    <Text size="lg" fw={600} mt="md">Author Whitelist</Text>
+                    <RegexList regexList={authorWhitelist} onChange={(list) => setAuthorWhitelist(list)} />
+                    <Text size="lg" fw={600} mt="md">Comment Whitelist</Text>
+                    <RegexList regexList={commentWhitelist} onChange={(list) => setCommentWhitelist(list)} />
+                    <Text size="lg" fw={600} mt="md">Blacklist</Text>
+                    <RegexList regexList={blacklist} onChange={(list) => setBlacklist(list)} />
+                    <Divider my="md" />
+                    <Text>CopyRight © <Anchor href="https://davidz.cn" target="_blank">DavidZ</Anchor></Text>
+                </Paper>
+            </Center>
+        </MantineProvider>
     )
 }
 

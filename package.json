@@ -10,7 +10,11 @@
     "package": "plasmo package"
   },
   "dependencies": {
+    "@mantine/core": "^7.17.2",
+    "@mantine/form": "^7.17.2",
+    "@mantine/hooks": "^7.17.2",
     "@plasmohq/storage": "^1.15.0",
+    "@tabler/icons-react": "^3.31.0",
     "plasmo": "0.90.3",
     "react": "18.2.0",
     "react-dom": "18.2.0"
@@ -21,6 +25,9 @@
     "@types/node": "20.11.5",
     "@types/react": "18.2.48",
     "@types/react-dom": "18.2.18",
+    "postcss": "^8.5.3",
+    "postcss-preset-mantine": "^1.17.0",
+    "postcss-simple-vars": "^7.0.1",
     "prettier": "3.2.4",
     "typescript": "5.3.3"
   },
