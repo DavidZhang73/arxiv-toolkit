@@ -2,7 +2,7 @@
   "name": "arxiv-toolkit",
   "displayName": "ArXiv Toolkit",
   "version": "0.1.0",
-  "description": "Enhance your ArXiv browsing expirence.",
+  "description": "A Chrome/Edge extension to help you quickly scan through the flood of daily ArXiv papers.",
   "author": "Jiahao Zhang. <davidbill@outlook.com>",
   "scripts": {
     "dev": "plasmo dev",
