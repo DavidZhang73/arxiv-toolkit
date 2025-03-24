@@ -10,29 +10,10 @@ export const config: PlasmoCSConfig = {
 
 const storage = new Storage()
 
-function hexToRgb(hex) {
-  hex = hex.replace(/^#/, "")
-
-  if (hex.length === 3) {
-    hex = hex
-      .split("")
-      .map((c) => c + c)
-      .join("")
-  }
-
-  if (hex.length !== 6) {
-    throw new Error("Invalid hex color: " + hex)
-  }
-
-  const bigint = parseInt(hex, 16)
-  const r = (bigint >> 16) & 255
-  const g = (bigint >> 8) & 255
-  const b = bigint & 255
-
-  return { r, g, b }
-}
-
 window.addEventListener("load", async () => {
+  /**
+   * Load the settings
+   */
   const highlightEnabled =
     (await storage.get<boolean>("highlight-enabled")) ?? true
   const highlightColor =
@@ -55,83 +36,161 @@ window.addEventListener("load", async () => {
     (await storage.get<string[]>("blacklist")) ?? ["/(mamba)/ig"]
   )
 
-  console.log("Highlight Enabled:", highlightEnabled)
-  console.log("Hide Blacklist Enabled:", hideBlacklistEnabled)
-  console.log("Grouping Enabled:", groupingEnabled)
-  console.log("Highlight Color:", highlightColor)
+  // DEBUG
+  // console.log("Highlight Enabled:", highlightEnabled)
+  // console.log("Hide Blacklist Enabled:", hideBlacklistEnabled)
+  // console.log("Grouping Enabled:", groupingEnabled)
+  // console.log("Highlight Color:", highlightColor)
 
-  console.log("Title Whitelist:", titleWhitelist)
-  console.log("Author Whitelist:", authorWhitelist)
-  console.log("Comment Whitelist:", commentWhitelist)
-  console.log("Blacklist:", blacklist)
+  // console.log("Title Whitelist:", titleWhitelist)
+  // console.log("Author Whitelist:", authorWhitelist)
+  // console.log("Comment Whitelist:", commentWhitelist)
+  // console.log("Blacklist:", blacklist)
 
-  if (highlightEnabled) {
-    const ddElements = document.querySelectorAll("dd")
+  /**
+   * Preprocess the papers
+   */
+  const rootElement = document.querySelector("#articles")
+  const h3 = rootElement.querySelector("h3")
 
-    ddElements.forEach((dd) => {
-      const titleElement = dd.querySelector(".list-title")
-      const authorElement = dd.querySelector(".list-authors")
-      const commentElement = dd.querySelector(".list-comments")
-
-      if (titleElement && titleWhitelist) {
-        titleWhitelist.forEach((regex) => {
-          titleElement.innerHTML = titleElement.innerHTML.replace(
-            regex,
-            `<span style="background-color: ${highlightColor}">$1</span>`
-          )
-        })
+  const paperList = []
+  const children = Array.from(rootElement.children)
+  for (let i = 0; i < children.length; i++) {
+    if (children[i].tagName === "DT") {
+      const dt = children[i]
+      const dd =
+        children[i + 1] && children[i + 1].tagName === "DD"
+          ? children[i + 1]
+          : null
+      if (dd) {
+        paperList.push({ dt, dd })
+        i++
       }
-
-      if (authorElement && authorWhitelist) {
-        authorWhitelist.forEach((regex) => {
-          authorElement.innerHTML = authorElement.innerHTML.replace(
-            regex,
-            `<span style="background-color: ${highlightColor}">$1</span>`
-          )
-        })
-      }
-
-      if (commentElement && commentWhitelist) {
-        commentWhitelist.forEach((regex) => {
-          commentElement.innerHTML = commentElement.innerHTML.replace(
-            regex,
-            `<span style="background-color: ${highlightColor}">$1</span>`
-          )
-        })
-      }
-    })
+    }
   }
 
-  if (hideBlacklistEnabled) {
-    const ddElements = document.querySelectorAll("dd")
+  /**
+   * Filter the papers
+   */
+  for (let i = 0; i < paperList.length; i++) {
+    let { dt, dd } = paperList[i]
+    const titleElement = dd.querySelector(".list-title")
+    const authorElement = dd.querySelector(".list-authors")
+    const commentElement = dd.querySelector(".list-comments")
 
-    ddElements.forEach((dd) => {
-      const titleElement = dd.querySelector(".list-title")
-      const authorElement = dd.querySelector(".list-authors")
-      const commentElement = dd.querySelector(".list-comments")
+    let highlight = false
+    let hide = false
 
-      let isBlacklisted = false
+    /**
+     * Highlight the paper title
+     */
+    if (titleElement && titleWhitelist) {
+      titleWhitelist.forEach((regex) => {
+        if (highlight || regex.test(titleElement.innerHTML)) {
+          highlight = true
+          if (highlightEnabled) {
+            titleElement.innerHTML = titleElement.innerHTML.replace(
+              regex,
+              `<span style="background-color: ${highlightColor}">$1</span>`
+            )
+          }
+        }
+      })
+    }
 
+    /**
+     * Hide the paper author
+     */
+    if (authorElement && authorWhitelist) {
+      authorWhitelist.forEach((regex) => {
+        if (highlight || regex.test(authorElement.innerHTML)) {
+          highlight = true
+          if (highlightEnabled) {
+            authorElement.innerHTML = authorElement.innerHTML.replace(
+              regex,
+              `<span style="background-color: ${highlightColor}">$1</span>`
+            )
+          }
+        }
+      })
+    }
+
+    /**
+     * Hide the paper comment
+     */
+    if (commentElement && commentWhitelist) {
+      commentWhitelist.forEach((regex) => {
+        if (highlight || regex.test(commentElement.innerHTML)) {
+          highlight = true
+          if (highlightEnabled) {
+            commentElement.innerHTML = commentElement.innerHTML.replace(
+              regex,
+              `<span style="background-color: ${highlightColor}">$1</span>`
+            )
+          }
+        }
+      })
+    }
+
+    /**
+     * Hide the paper if it is blacklisted
+     */
+    if (blacklist) {
       ;[titleElement, authorElement, commentElement].forEach((element) => {
         if (element) {
           blacklist.forEach((regex) => {
             if (regex.test(element.textContent || "")) {
-              isBlacklisted = true
+              hide = true
             }
           })
         }
       })
 
-      if (isBlacklisted) {
+      if (highlight) hide = false
+
+      // highlighting has higher priority than hiding
+      if (hideBlacklistEnabled && hide) {
+        dt.style.opacity = "0.3"
+        dt.style.filter = "grayscale(100%)"
         dd.style.opacity = "0.3"
         dd.style.filter = "grayscale(100%)"
-
-        const dt = dd.previousElementSibling as HTMLElement
-        if (dt && dt.tagName.toLowerCase() === "dt") {
-          dt.style.opacity = "0.3"
-          dt.style.filter = "grayscale(100%)"
-        }
       }
+    }
+
+    paperList[i].highlight = highlight
+    paperList[i].hide = hide
+  }
+
+  /**
+   * Group the papers
+   * highlighted --> not highlighted not hidden --> hidden
+   */
+  if (groupingEnabled) {
+    const highlighted = paperList.filter((paper) => paper.highlight)
+    const notHighlighted = paperList.filter(
+      (paper) => !paper.highlight && !paper.hide
+    )
+    const hidden = paperList.filter((paper) => paper.hide)
+
+    const newPaperList = [...highlighted, ...notHighlighted, ...hidden]
+
+    rootElement.innerHTML = h3.outerHTML
+    newPaperList.forEach(({ dt, dd }, index) => {
+      if (index === 0) {
+        const categoryTitleElement = document.createElement("h4")
+        categoryTitleElement.innerHTML = `Highlighted (${highlighted.length})`
+        rootElement.appendChild(categoryTitleElement)
+      } else if (index === highlighted.length) {
+        const categoryTitleElement = document.createElement("h4")
+        categoryTitleElement.innerHTML = `Not Highlighted (${notHighlighted.length})`
+        rootElement.appendChild(categoryTitleElement)
+      } else if (index === highlighted.length + notHighlighted.length) {
+        const categoryTitleElement = document.createElement("h4")
+        categoryTitleElement.innerHTML = `Hidden (${hidden.length})`
+        rootElement.appendChild(categoryTitleElement)
+      }
+      rootElement.appendChild(dt)
+      rootElement.appendChild(dd)
     })
   }
 })
