@@ -30,6 +30,6 @@ This project is built using the following open-source frameworks:
 - **[Mantine](https://mantine.dev/)**: For UI components and hooks.
 - **[Tabler Icons](https://tabler-icons.io/)**: For iconography.
 
-## Acknowledgments
+### Acknowledgments
 
 Special thanks to Xin Huang for the logo inspiration.
