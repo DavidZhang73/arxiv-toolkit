@@ -34,7 +34,7 @@ function IndexOptions() {
   )
   const [groupingEnabled, setGroupingEnabled] = useStorage<boolean>(
     "grouping-enabled",
-    false
+    true
   )
 
   const [titleWhitelist, setTitleWhitelist] = useRegexStorage(

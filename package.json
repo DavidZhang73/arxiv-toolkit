@@ -1,7 +1,7 @@
 {
   "name": "arxiv-toolkit",
   "displayName": "ArXiv Toolkit",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Enhance your ArXiv browsing expirence.",
   "author": "Jiahao Zhang. <davidbill@outlook.com>",
   "scripts": {

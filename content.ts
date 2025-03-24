@@ -21,7 +21,7 @@ window.addEventListener("load", async () => {
   const hideBlacklistEnabled =
     (await storage.get<boolean>("hide-blacklist-enabled")) ?? true
   const groupingEnabled =
-    (await storage.get<boolean>("grouping-enabled")) ?? false
+    (await storage.get<boolean>("grouping-enabled")) ?? true
 
   const titleWhitelist = deserializeRegexList(
     (await storage.get<string[]>("title-whitelist")) ?? ["/(video)/ig"]

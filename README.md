@@ -1,39 +1,29 @@
-This is a [Plasmo extension](https://docs.plasmo.com/) project bootstrapped with [`plasmo init`](https://www.npmjs.com/package/plasmo).
+<div align="center">
+<img width="96px" height="96px" src="assets/logo-1024-transparent.png" alt="Vidat logo">
 
-## Getting Started
+# ArXiv Toolkit
 
-First, run the development server:
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
 
-```bash
-pnpm dev
-# or
-npm run dev
-```
+A Chrome/Edge extension to help you quickly scan through the flood of daily ArXiv papers.
 
-Open your browser and load the appropriate development build. For example, if you are developing for the chrome browser, using manifest v3, use: `build/chrome-mv3-dev`.
+</div>
 
-You can start editing the popup by modifying `popup.tsx`. It should auto-update as you make changes. To add an options page, simply add a `options.tsx` file to the root of the project, with a react component default exported. Likewise to add a content page, add a `content.ts` file to the root of the project, importing some module and do some logic, then reload the extension on your browser.
+### Introduction
 
-For further guidance, [visit our Documentation](https://docs.plasmo.com/)
+Tired of skimming through 100+ AI papers every day? This extension helps you stay on top of the latest trends by:
 
-## Making production build
+- Highlighting or dimming papers based on custom keywords or regex rules.
+- Reordering and grouping daily papers by matching topics or interests.
 
-Run the following:
+### Tech Stack
 
-```bash
-pnpm build
-# or
-npm run build
-```
+This project is built using the following open-source frameworks:
 
-This should create a production bundle for your extension, ready to be zipped and published to the stores.
+- **[Plasmo Framework](https://docs.plasmo.com/)**: For building browser extensions.
+- **[Mantine](https://mantine.dev/)**: For UI components and hooks.
+- **[Tabler Icons](https://tabler-icons.io/)**: For iconography.
 
-## Submit to the webstores
+## Acknowledgments
 
-The easiest way to deploy your Plasmo extension is to use the built-in [bpp](https://bpp.browser.market) GitHub action. Prior to using this action however, make sure to build your extension and upload the first version to the store to establish the basic credentials. Then, simply follow [this setup instruction](https://docs.plasmo.com/framework/workflows/submit) and you should be on your way for automated submission!
-
-## TODO
-
-- [x] 配置页面
-- [x] ArXiv Recent 页面关键词高亮与过滤
-- [ ] 关键词支持正则
+Special thanks to Xin Huang for the logo inspiration.
