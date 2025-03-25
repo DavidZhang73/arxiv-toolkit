@@ -58,7 +58,6 @@ function IndexOptions() {
         <Paper shadow="md" withBorder p="xl" mt="xl" w={600}>
           <Text
             size="xl"
-            md
             style={{
               display: "flex",
               alignItems: "center"

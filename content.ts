@@ -172,26 +172,37 @@ window.addEventListener("load", async () => {
       )
       const hidden = paperList.filter((paper) => paper.hide)
 
-      const newPaperList = [...highlighted, ...notHighlighted, ...hidden]
-
       rootElement.innerHTML = h3.outerHTML
-      newPaperList.forEach(({ dt, dd }, index) => {
-        if (index === 0) {
-          const categoryTitleElement = document.createElement("h4")
-          categoryTitleElement.innerHTML = `Highlighted (${highlighted.length})`
-          rootElement.appendChild(categoryTitleElement)
-        } else if (index === highlighted.length) {
-          const categoryTitleElement = document.createElement("h4")
-          categoryTitleElement.innerHTML = `Not Highlighted (${notHighlighted.length})`
-          rootElement.appendChild(categoryTitleElement)
-        } else if (index === highlighted.length + notHighlighted.length) {
-          const categoryTitleElement = document.createElement("h4")
-          categoryTitleElement.innerHTML = `Hidden (${hidden.length})`
-          rootElement.appendChild(categoryTitleElement)
-        }
-        rootElement.appendChild(dt)
-        rootElement.appendChild(dd)
-      })
+
+      if (highlighted.length !== 0) {
+        const categoryTitleElement = document.createElement("h4")
+        categoryTitleElement.innerHTML = `Highlighted (${highlighted.length})`
+        rootElement.appendChild(categoryTitleElement)
+        highlighted.forEach(({ dt, dd }) => {
+          rootElement.appendChild(dt)
+          rootElement.appendChild(dd)
+        })
+      }
+
+      if (notHighlighted.length !== 0) {
+        const categoryTitleElement = document.createElement("h4")
+        categoryTitleElement.innerHTML = `Not Highlighted (${notHighlighted.length})`
+        rootElement.appendChild(categoryTitleElement)
+        notHighlighted.forEach(({ dt, dd }) => {
+          rootElement.appendChild(dt)
+          rootElement.appendChild(dd)
+        })
+      }
+
+      if (hidden.length !== 0) {
+        const categoryTitleElement = document.createElement("h4")
+        categoryTitleElement.innerHTML = `Hidden (${hidden.length})`
+        rootElement.appendChild(categoryTitleElement)
+        hidden.forEach(({ dt, dd }) => {
+          rootElement.appendChild(dt)
+          rootElement.appendChild(dd)
+        })
+      }
     }
   })
 })
