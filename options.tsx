@@ -55,7 +55,7 @@ function IndexOptions() {
   return (
     <MantineProvider>
       <Center>
-        <Paper shadow="md" withBorder p="xl" mt="xl" w={600}>
+        <Paper shadow="md" withBorder p="xl" my="xl" w={600}>
           <Text
             size="xl"
             style={{
