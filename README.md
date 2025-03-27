@@ -1,5 +1,5 @@
 <div align="center">
-<img width="96px" height="96px" src="assets/logo-1024.png" alt="Vidat logo">
+<img height="200px" src="assets/skeleton-logo.png" alt="ArXiv Teaser">
 
 # ArXiv Toolkit
 
