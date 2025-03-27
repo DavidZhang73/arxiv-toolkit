@@ -24,12 +24,13 @@ Tired of skimming through 100+ AI papers every day? This extension helps you sta
   <img src="assets/chrome_badge.png" width="200px">
 </a>
 
+[Chrome Web Store](https://chromewebstore.google.com/detail/arxiv-toolkit/pjodeodbajecmlaofokdiifjlmhkkell)
+
 <a href="https://microsoftedge.microsoft.com/addons/detail/arxiv-toolkit/flgiaicohcfkkhppkncegpahnlmakloc">
   <img src="assets/edge_badge.png" width="200px">
 </a>
 
-- [Chrome Web Store](https://chromewebstore.google.com/detail/arxiv-toolkit/pjodeodbajecmlaofokdiifjlmhkkell)
-- [Microsoft Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/arxiv-toolkit/flgiaicohcfkkhppkncegpahnlmakloc)
+[Microsoft Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/arxiv-toolkit/flgiaicohcfkkhppkncegpahnlmakloc)
 
 ### Screenshots
 
