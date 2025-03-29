@@ -17,10 +17,7 @@ export function deserializeRegexList(list: string[] = []): RegExp[] {
 }
 
 export function useRegexStorage(key: string, defaultValue: RegExp[] = []) {
-  const [rawList, setRawList] = useRawStorage<string[]>(
-    key,
-    serializeRegexList(defaultValue)
-  )
+  const [rawList, setRawList] = useRawStorage<string[]>(key, serializeRegexList(defaultValue))
 
   const parsedList = deserializeRegexList(rawList)
 

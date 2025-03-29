@@ -92,24 +92,17 @@ export default function RegexList({ regexList, onChange }) {
           rightSection={
             <ActionIcon.Group>
               <Tooltip label="Case-insensitive">
-                <ActionIcon
-                  variant={regex.i ? "light" : "subtle"}
-                  onClick={() => toggleFlag(index, "i")}>
+                <ActionIcon variant={regex.i ? "light" : "subtle"} onClick={() => toggleFlag(index, "i")}>
                   /i
                 </ActionIcon>
               </Tooltip>
               <Tooltip label="Multiple matches">
-                <ActionIcon
-                  variant={regex.g ? "light" : "subtle"}
-                  onClick={() => toggleFlag(index, "g")}>
+                <ActionIcon variant={regex.g ? "light" : "subtle"} onClick={() => toggleFlag(index, "g")}>
                   /g
                 </ActionIcon>
               </Tooltip>
               <Tooltip label="Delete">
-                <ActionIcon
-                  variant="light"
-                  color="red"
-                  onClick={() => deleteRule(index)}>
+                <ActionIcon variant="light" color="red" onClick={() => deleteRule(index)}>
                   <IconTrashX size={14} />
                 </ActionIcon>
               </Tooltip>
@@ -117,11 +110,7 @@ export default function RegexList({ regexList, onChange }) {
           }
         />
       ))}
-      <Button
-        fullWidth
-        variant="default"
-        onClick={addRule}
-        leftSection={<IconPlus size={14} />}>
+      <Button fullWidth variant="default" onClick={addRule} leftSection={<IconPlus size={14} />}>
         Add
       </Button>
     </Stack>

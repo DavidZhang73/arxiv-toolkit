@@ -14,27 +14,17 @@ window.addEventListener("load", async () => {
   /**
    * Load the settings
    */
-  const highlightEnabled =
-    (await storage.get<boolean>("highlight-enabled")) ?? true
-  const highlightColor =
-    (await storage.get<string>("highlight-color")) ?? "#4deb29"
-  const hideBlacklistEnabled =
-    (await storage.get<boolean>("hide-blacklist-enabled")) ?? true
-  const groupingEnabled =
-    (await storage.get<boolean>("grouping-enabled")) ?? true
+  const highlightEnabled = (await storage.get<boolean>("highlight-enabled")) ?? true
+  const highlightColor = (await storage.get<string>("highlight-color")) ?? "#4deb29"
+  const hideBlacklistEnabled = (await storage.get<boolean>("hide-blacklist-enabled")) ?? true
+  const groupingEnabled = (await storage.get<boolean>("grouping-enabled")) ?? true
 
-  const titleWhitelist = deserializeRegexList(
-    (await storage.get<string[]>("title-whitelist")) ?? ["/(video)/ig"]
-  )
+  const titleWhitelist = deserializeRegexList((await storage.get<string[]>("title-whitelist")) ?? ["/(video)/ig"])
   const authorWhitelist = deserializeRegexList(
     (await storage.get<string[]>("author-whitelist")) ?? ["/(Kaiming He)/ig"]
   )
-  const commentWhitelist = deserializeRegexList(
-    (await storage.get<string[]>("comment-whitelist")) ?? ["/(accept)/ig"]
-  )
-  const blacklist = deserializeRegexList(
-    (await storage.get<string[]>("blacklist")) ?? ["/(mamba)/ig"]
-  )
+  const commentWhitelist = deserializeRegexList((await storage.get<string[]>("comment-whitelist")) ?? ["/(accept)/ig"])
+  const blacklist = deserializeRegexList((await storage.get<string[]>("blacklist")) ?? ["/(mamba)/ig"])
 
   // DEBUG
   // console.log("Highlight Enabled:", highlightEnabled)
@@ -58,10 +48,7 @@ window.addEventListener("load", async () => {
     for (let i = 0; i < children.length; i++) {
       if (children[i].tagName === "DT") {
         const dt = children[i]
-        const dd =
-          children[i + 1] && children[i + 1].tagName === "DD"
-            ? children[i + 1]
-            : null
+        const dd = children[i + 1] && children[i + 1].tagName === "DD" ? children[i + 1] : null
         if (dd) {
           paperList.push({ dt, dd })
           i++
@@ -167,9 +154,7 @@ window.addEventListener("load", async () => {
      */
     if (groupingEnabled) {
       const highlighted = paperList.filter((paper) => paper.highlight)
-      const notHighlighted = paperList.filter(
-        (paper) => !paper.highlight && !paper.hide
-      )
+      const notHighlighted = paperList.filter((paper) => !paper.highlight && !paper.hide)
       const hidden = paperList.filter((paper) => paper.hide)
 
       rootElement.innerHTML = h3.outerHTML
